@@ -1,0 +1,56 @@
+@extends('parent')
+
+@section('content')
+<div class="flex items-center justify-between">
+  <h1 class="text-xl font-black">Daftar Tugas</h1>
+  <a class="rounded-full py-2 px-3 uppercase text-xs font-bold cursor-pointer tracking-wider text-cyan-800 bg-cyan-200"
+    href="/Tugas/add">Tambah</a>
+</div>
+@php
+$no = 1
+@endphp
+@if($tasks->isEmpty())
+<p class="text-center my-10"><i>Data table is empty</i></p>
+@else
+<div class="overflow-auto rounded-lg shadow mt-5">
+  <table class="w-full">
+    <thead class="bg-gray-50 border-b-2 border-gray-200">
+      <tr>
+        <th class="p-3 text-sm font-semibold tracking-wide">#</th>
+        <th class="p-3 text-sm font-semibold tracking-wide text-left">Nama Tugas</th>
+        <th class="p-3 text-sm font-semibold tracking-wide text-left">Deskripsi Tugas</th>
+        <th class="p-3 text-sm font-semibold tracking-wide text-left">Batas Kumpul</th>
+        <th class="p-3 text-sm font-semibold tracking-wide w-28">Ditugaskan kepada</th>
+        <th class="p-3 text-sm font-semibold tracking-wide w-28">Option</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-100">
+      @foreach ($tasks as $t)
+      <tr class="odd:bg-white even:bg-gray-50">
+        <td class="font-bold text-blue-500 text-center"> {{$no++}}</td>
+        <td class="p-3 text-sm text-gray-700 whitespace-nowrap"> {{$t->name}}</td>
+        <td class="p-3 text-sm text-gray-700 whitespace-nowrap"> {{$t->description}}</td>
+        <td class="p-3 text-sm text-gray-700 whitespace-nowrap"> {{$t->due}}</td>
+        <td class="p-3 text-sm text-gray-700 whitespace-nowrap"> {{$t->class->kd_kelas}}</td>
+        <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
+          <div class="text-center flex items-center">
+            <a href="{{ url('Tugas/edit/'.$t->id) }}"
+              class="rounded-full py-2 px-3 uppercase text-xs font-bold cursor-pointer tracking-wider text-yellow-800 bg-yellow-200 mr-3">Edit</a>
+            <form action="{{ url('Tugas/'.$t->id) }}" method="post">
+              @method('delete')
+              @csrf
+              <button
+                class="rounded-full py-2 px-3 uppercase text-xs font-bold cursor-pointer tracking-wider text-red-800 bg-red-200">Hapus</button>
+            </form>
+            <a href="{{ url('Tugas/detail/'.$t->id) }}"
+              class="rounded-full py-2 px-3 uppercase text-xs font-bold cursor-pointer tracking-wider text-green-800 bg-green-200 ml-3">details</a>
+          </div>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+</div>
+
+@endif
+@endsection
