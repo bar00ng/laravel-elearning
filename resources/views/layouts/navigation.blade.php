@@ -34,6 +34,9 @@
                         {{ __('Assignment') }}
                     </x-nav-link>
                     @endif
+                    <x-nav-link :href="route('mapbox')" :active="request()->routeIs('mapbox*')">
+                        {{ __('Mapbox') }}
+                    </x-nav-link>
                 </div>
             </div>
 

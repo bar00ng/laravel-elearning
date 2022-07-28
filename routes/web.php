@@ -8,6 +8,16 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
+
+    Route::get('/mapbox', 'App\Http\Controllers\MapboxController@index')->name("mapbox");
+
+    Route::post('/save','App\Http\Controllers\MapboxController@store_location')->name('store.loc');
+
+    Route::delete('/del/{id}','App\Http\Controllers\MapboxController@remove_location')->name('del.loc');
+
+    Route::get('/get/{id}','App\Http\Controllers\MapboxController@get_location')->name('mapbox.get.loc');
+    
+    Route::patch('/patch/{id}','App\Http\Controllers\MapboxController@edit_location')->name('edit.loc');
 });
 
 Route::group(['middleware'=>['auth','role:admin']], function(){
@@ -68,7 +78,7 @@ Route::group(['middleware'=>['auth','role:admin']], function(){
     Route::patch('Kelas/edit/{id}', 'App\Http\Controllers\KelasController@simpanEditKelas');
 });
 
-Route::group(['middleware'=>['auth','role:dosen|superadministrator']],function(){
+Route::group(['middleware'=>['auth','role:dosen|admin']],function(){
     Route::get('Tugas','App\Http\Controllers\TugasController@listTugas')->name('Tugas');
 
     // Membuka form tambah Tugas
@@ -91,7 +101,7 @@ Route::group(['middleware'=>['auth','role:dosen|superadministrator']],function()
     Route::patch('Tugas/store/{TugasId}/{ScoreId}', 'App\Http\Controllers\TugasController@storeNilai')->name('Tugas.store');
 });
 
-Route::group(['middleware'=>['auth','role:mahasiswa|superadministrator']],function(){
+Route::group(['middleware'=>['auth','role:mahasiswa|admin']],function(){
     Route::get('Assignment','App\Http\Controllers\AssignmentController@listTugas')->name('Assignment');
 
     Route::get('detailAssignment/{id}','App\Http\Controllers\AssignmentController@detailTugas')->name('Assignment.detail');
