@@ -30,7 +30,10 @@ $no = 1
         <td class="font-bold text-blue-500 text-center"> {{$no++}}</td>
         <td class="p-3 text-sm text-gray-700 whitespace-nowrap"> {{$user->name}}</td>
         <td class="p-3 text-sm text-gray-700 whitespace-nowrap"> {{$user->email}}</td>
-        <td class="p-3 text-sm text-gray-700 whitespace-nowrap"> {{$user->alamat}}</td>
+        <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
+          <p>Lat : {{$user->latitude}}</p>
+          <p>Lng : {{$user->longitude}}</p>
+        </td>
         <td class="p-3 text-sm text-gray-700 whitespace-nowrap"> {{$user->class->kd_kelas}}</td>
         <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
           <div class="text-center flex items-center">

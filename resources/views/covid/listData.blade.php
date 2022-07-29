@@ -5,10 +5,13 @@
   <h1 class="text-xl font-black">Data Covid-19 Per Provinsi</h1>
   <p>{{$data['last_date']}}</p>
 </div>
+
+<div id="chart" style="height: 300px;"></div>
+
 @php
 $no = 1
 @endphp
-<div class="overflow-auto rounded-lg shadow mt-5">
+<div class="overflow-auto rounded-lg shadow mt-2">
   <table class="w-full">
     <thead class="bg-gray-50 border-b-2 border-gray-200">
       <tr>
@@ -34,4 +37,19 @@ $no = 1
     </tbody>
   </table>
 </div>
+
+<!-- Charting library -->
+<script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+<!-- Chartisan -->
+<script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
+<!-- Your application script -->
+<script>
+  const chart = new Chartisan({
+        el: '#chart',
+        url: "@chart('covid_chart')",
+        hooks: new ChartisanHooks()
+        .colors()
+        .tooltip(),
+      });
+</script>
 @endsection

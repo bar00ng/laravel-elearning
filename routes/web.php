@@ -9,15 +9,15 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
 
-    Route::get('/mapbox', 'App\Http\Controllers\MapboxController@index')->name("mapbox");
+    // Route::get('/mapbox', 'App\Http\Controllers\MapboxController@index')->name("mapbox");
 
-    Route::post('/save','App\Http\Controllers\MapboxController@store_location')->name('store.loc');
+    // Route::post('/save','App\Http\Controllers\MapboxController@store_location')->name('store.loc');
 
-    Route::delete('/del/{id}','App\Http\Controllers\MapboxController@remove_location')->name('del.loc');
+    // Route::delete('/del/{id}','App\Http\Controllers\MapboxController@remove_location')->name('del.loc');
 
-    Route::get('/get/{id}','App\Http\Controllers\MapboxController@get_location')->name('mapbox.get.loc');
+    // Route::get('/get/{id}','App\Http\Controllers\MapboxController@get_location')->name('mapbox.get.loc');
     
-    Route::patch('/patch/{id}','App\Http\Controllers\MapboxController@edit_location')->name('edit.loc');
+    // Route::patch('/patch/{id}','App\Http\Controllers\MapboxController@edit_location')->name('edit.loc');
     
     Route::get('/covid', 'App\Http\Controllers\CovidController@index')->name('covid');
 });
@@ -39,7 +39,7 @@ Route::group(['middleware'=>['auth','role:admin']], function(){
     Route::get('Mahasiswa/edit/{id}', 'App\Http\Controllers\MahasiswaController@formEdit')->name('Mahasiswa.edit');
 
     // Mengedit data mahasiswa
-    Route::patch('Mahasiswa/edit/{id}', 'App\Http\Controllers\MahasiswaController@simpanEditMahasiswa');
+    Route::patch('Mahasiswa/edit/{id}', 'App\Http\Controllers\MahasiswaController@simpanEditMahasiswa')->name('mahasiswa.proses.edit');
 
 
     // Menampilkan list semua Dosen
@@ -58,7 +58,7 @@ Route::group(['middleware'=>['auth','role:admin']], function(){
     Route::get('Dosen/edit/{id}', 'App\Http\Controllers\DosenController@formEdit')->name('Dosen.edit');
 
     // Mengedit data mahasiswa
-    Route::patch('Dosen/edit/{id}', 'App\Http\Controllers\DosenController@simpanEditDosen');
+    Route::patch('Dosen/edit/{id}', 'App\Http\Controllers\DosenController@simpanEditDosen')->name('dosen.proses.edit');
 
 
     // Menampilkan list semua Kelas

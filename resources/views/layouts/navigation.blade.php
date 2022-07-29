@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
+                        <img src="/img/logo.png" class="w-10 block" alt="">
                     </a>
                 </div>
 
@@ -34,9 +34,9 @@
                         {{ __('Assignment') }}
                     </x-nav-link>
                     @endif
-                    <x-nav-link :href="route('mapbox')" :active="request()->routeIs('mapbox*')">
+                    {{-- <x-nav-link :href="route('mapbox')" :active="request()->routeIs('mapbox*')">
                         {{ __('Mapbox') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
                     <x-nav-link :href="route('covid')" :active="request()->routeIs('covid*')">
                         {{ __('Covid-19') }}
                     </x-nav-link>

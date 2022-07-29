@@ -27,7 +27,6 @@ class MahasiswaController extends Controller
         $validated = $r->validate([
             'nama' => 'required|max:50',
             'email' => 'required|max:50|unique:App\Models\User,email',
-            'alamat' => 'required|max:255',
             'class_id' =>'required|max:50|',
             'password' => 'required|max:50'
         ]);
@@ -35,7 +34,8 @@ class MahasiswaController extends Controller
         $user = User::create([
             'name' => $r->nama,
             'email' => $r->email,
-            'alamat' => $r->alamat,
+            'longitude' => $r->longitude,
+            'latitude' => $r->latitude,
             'class_id' => $r->class_id,
             'password' => Hash::make($r->password)
         ]);
@@ -53,7 +53,7 @@ class MahasiswaController extends Controller
     }
 
     public function formEdit($id){
-        $user = User::where('id', $id)->get();
+        $user = User::where('id', $id)->first();
         $kelas = Classes::get();
 
         return view('admin.formEditMahasiswa',[
@@ -67,11 +67,10 @@ class MahasiswaController extends Controller
                 ->update([
                     'name' => $r->nama,
                     'email' => $r->email,
-                    'alamat' => $r->alamat,
+                    'longitude' => $r->longitude,
+                    'latitude' => $r->latitude,
                     'class_id' => $r->class_id,
                     'password' => Hash::make($r->password)
                 ]);
-        
-                return redirect('Mahasiswa')->with('status','Data berhasil diupdate');
     }
 }
