@@ -37,6 +37,9 @@
                     <x-nav-link :href="route('mapbox')" :active="request()->routeIs('mapbox*')">
                         {{ __('Mapbox') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('covid')" :active="request()->routeIs('covid*')">
+                        {{ __('Covid-19') }}
+                    </x-nav-link>
                 </div>
             </div>
 
