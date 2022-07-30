@@ -35,14 +35,16 @@
         @endif
 
         <!-- Page Content -->
-        <main>
+        <main class="min-h-screen">
             {{ $slot }}
         </main>
+
+        @include('layouts.footer')
     </div>
 
-    <script>
-        {{ $script }}
-    </script>
+
+    {{ $script }}
+
 </body>
 
 </html>

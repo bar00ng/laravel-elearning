@@ -34,68 +34,70 @@
 @endsection
 
 @section('scripts')
-const marker = new mapboxgl.Marker();
-const longitude = document.querySelector('#longitude');
-const latitude = document.querySelector('#latitude');
-var lng = {{ $user['longitude'] }};
-var lat = {{ $user['latitude'] }};
-function add_marker (e) {
-var coordinates = e.lngLat;
-console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
-marker.setLngLat(coordinates).addTo(map);
-longitude.value = coordinates.lng;
-latitude.value = coordinates.lat;
-lng = coordinates.lng;
-lat = coordinates.lat;
-}
-mapboxgl.accessToken =
-"pk.eyJ1Ijoic3l1a3VyemFreSIsImEiOiJjbDVoanF2a2QwYTU3M2NtZDRjc3BiaGdyIn0.bDzvwmyRWBKYqF1M9Hxkkw";
-const map = new mapboxgl.Map({
-container: "map", // container ID
-style: "mapbox://styles/mapbox/streets-v11", // style URL
-center: [lng, lat], // starting position [lng, lat]
-zoom: 15, // starting zoom
-projection: "globe", // display the map as a 3D globe
-});
-const default_marker = marker.setLngLat([lng, lat]).addTo(map);
-map.on("style.load", () => {
-map.setFog({});
-});
-map.on('click', add_marker.bind(this));
-map.addControl(
-new mapboxgl.GeolocateControl({
-positionOptions: {
-enableHighAccuracy: true
-},
-trackUserLocation: true,
-showUserHeading: true
-})
-);
+<script>
+  const marker = new mapboxgl.Marker();
+  const longitude = document.querySelector('#longitude');
+  const latitude = document.querySelector('#latitude');
+  var lng = {{ $user['longitude'] }};
+  var lat = {{ $user['latitude'] }};
+  function add_marker (e) {
+    var coordinates = e.lngLat;
+    console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
+    marker.setLngLat(coordinates).addTo(map);
+    longitude.value = coordinates.lng;
+    latitude.value = coordinates.lat;
+    lng = coordinates.lng;
+    lat = coordinates.lat;
+  }
+  mapboxgl.accessToken =
+  "pk.eyJ1Ijoic3l1a3VyemFreSIsImEiOiJjbDVoanF2a2QwYTU3M2NtZDRjc3BiaGdyIn0.bDzvwmyRWBKYqF1M9Hxkkw";
+  const map = new mapboxgl.Map({
+    container: "map", // container ID
+    style: "mapbox://styles/mapbox/streets-v11", // style URL
+    center: [lng, lat], // starting position [lng, lat]
+    zoom: 15, // starting zoom
+    projection: "globe", // display the map as a 3D globe
+  });
+  const default_marker = marker.setLngLat([lng, lat]).addTo(map);
+  map.on("style.load", () => {
+    map.setFog({});
+  });
+  map.on('click', add_marker.bind(this));
+  map.addControl(
+    new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      showUserHeading: true
+    })
+  );
 
-// Simpan Data Lokasi
-$("#patch_location").click(function (e) {
-e.preventDefault();
-nama = $('#nama_dosen').val();
-email = $('#email_dosen').val();
-password = $('#pwd_dosen').val();
+  // Simpan Data Lokasi
+  $("#patch_location").click(function (e) {
+    e.preventDefault();
+    nama = $('#nama_dosen').val();
+    email = $('#email_dosen').val();
+    password = $('#pwd_dosen').val();
 
-$.ajax({
-url: '{{ route('dosen.proses.edit', $user['id']) }}',
-method: 'PATCH',
-data: {
-_token: '{{ csrf_token() }}',
-nama: nama,
-email:email,
-longitude: lng,
-latitude: lat,
-password: password
-},
-success: function (response) {
-window.location.replace("{{route('Dosen')}}");;
-},
-error: function(error) {
-alert("Error");
-}
-})
-});
+    $.ajax({
+      url: '{{ route('dosen.proses.edit', $user['id']) }}',
+      method: 'PATCH',
+      data: {
+        _token: '{{ csrf_token() }}',
+        nama: nama,
+        email:email,
+        longitude: lng,
+        latitude: lat,
+        password: password
+      },
+      success: function (response) {
+        window.location.replace("{{route('Dosen')}}");;
+      },
+      error: function(error) {
+        alert("Error");
+      }
+    })
+  });
+</script>
 @endsection

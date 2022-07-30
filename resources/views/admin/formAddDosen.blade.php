@@ -32,79 +32,71 @@
 @endsection
 
 @section('scripts')
-const marker = new mapboxgl.Marker();
-const longitude = document.querySelector('#longitude');
-const latitude = document.querySelector('#latitude');
-var lng = 107.615299, lat = -6.8868957;
-function coordinateFeature(lng, lat) {
-return {
-center: [lng, lat],
-geometry: {
-type: 'Point',
-coordinates: [lng, lat]
-},
-place_name: 'Lat: ' + lat + ' Lng: ' + lng,
-place_type: ['coordinate'],
-properties: {},
-type: 'Feature'
-};
-}
-function add_marker (e) {
-var coordinates = e.lngLat;
-console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
-marker.setLngLat(coordinates).addTo(map);
-longitude.value = coordinates.lng;
-latitude.value = coordinates.lat;
-lng = coordinates.lng;
-lat = coordinates.lat;
-}
-mapboxgl.accessToken =
-"pk.eyJ1Ijoic3l1a3VyemFreSIsImEiOiJjbDVoanF2a2QwYTU3M2NtZDRjc3BiaGdyIn0.bDzvwmyRWBKYqF1M9Hxkkw";
-const map = new mapboxgl.Map({
-container: "map", // container ID
-style: "mapbox://styles/mapbox/streets-v11", // style URL
-center: [lng, lat], // starting position [lng, lat]
-zoom: 15, // starting zoom
-projection: "globe", // display the map as a 3D globe
-});
-map.on("style.load", () => {
-map.setFog({});
-});
-map.on('click', add_marker.bind(this));
-map.addControl(
-new mapboxgl.GeolocateControl({
-positionOptions: {
-enableHighAccuracy: true
-},
-trackUserLocation: true,
-showUserHeading: true
-})
-);
+<script>
+  const marker = new mapboxgl.Marker();
+  const longitude = document.querySelector('#longitude');
+  const latitude = document.querySelector('#latitude');
+  var lng = 107.615299, lat = -6.8868957;
 
-// Simpan Data Lokasi
-$("#store_location").click(function (e) {
-  e.preventDefault();
-  nama = $('#nama_dosen').val();
-  email = $('#email_dosen').val();
-  password = $('#pwd_dosen').val();
+  function add_marker (e) {
+    var coordinates = e.lngLat;
+    console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
+    marker.setLngLat(coordinates).addTo(map);
+    longitude.value = coordinates.lng;
+    latitude.value = coordinates.lat;
+    lng = coordinates.lng;
+    lat = coordinates.lat;
+  }
 
-  $.ajax({
-    url: '{{ route('Dosen.add') }}',
-    method: 'POST',
-    data: {
-      _token: '{{ csrf_token() }}',
-      nama: nama,
-      email:email,
-      longitude: lng,
-      latitude: lat,
-      password: password
-    },
-    success: function (response) {
-      window.location.replace("{{route('Dosen')}}");;
-    },
-    error: function(error) {
-      console.log(error);
-    }
-  })
+  mapboxgl.accessToken =
+  "pk.eyJ1Ijoic3l1a3VyemFreSIsImEiOiJjbDVoanF2a2QwYTU3M2NtZDRjc3BiaGdyIn0.bDzvwmyRWBKYqF1M9Hxkkw";
+  const map = new mapboxgl.Map({
+    container: "map", // container ID
+    style: "mapbox://styles/mapbox/streets-v11", // style URL
+    center: [lng, lat], // starting position [lng, lat]
+    zoom: 15, // starting zoom
+    projection: "globe", // display the map as a 3D globe
   });
+
+  map.on("style.load", () => {
+    map.setFog({});
+  });
+  map.on('click', add_marker.bind(this));
+  map.addControl(
+    new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      showUserHeading: true
+    })
+  );
+  
+  // Simpan Data Lokasi
+  $("#store_location").click(function (e) {
+    e.preventDefault();
+    nama = $('#nama_dosen').val();
+    email = $('#email_dosen').val();
+    password = $('#pwd_dosen').val();
+
+    $.ajax({
+      url: '{{ route('Dosen.add') }}',
+      method: 'POST',
+      data: {
+        _token: '{{ csrf_token() }}',
+        nama: nama,
+        email:email,
+        longitude: lng,
+        latitude: lat,
+        password: password
+      },
+      success: function (response) {
+        window.location.replace("{{route('Dosen')}}");;
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    })
+  });
+</script>
 @endsection
